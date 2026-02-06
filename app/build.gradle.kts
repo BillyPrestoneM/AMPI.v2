@@ -36,6 +36,9 @@ android {
     buildFeatures {
         compose = true
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.14"
+    }
 }
 
 dependencies {
@@ -58,6 +61,20 @@ dependencies {
     //splash screen
     implementation(libs.androidx.core.splashscreen)
 
-    //koin depedency injection
+    //koin dependency injection
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
+    implementation(libs.koin.viewmodel)
+
+    //datastore
+    implementation(libs.androidx.datastore.preferences)
+
+    //coroutine
+    implementation(libs.kotlinx.coroutines.android)
+
+    //navigation jetpack compose
+    implementation(libs.androidx.navigation.compose)
+
 
 }
