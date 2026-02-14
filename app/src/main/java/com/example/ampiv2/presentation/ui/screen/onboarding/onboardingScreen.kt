@@ -4,12 +4,14 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
@@ -32,7 +34,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.ampiv2.di.utils.BotNavScreen
 import com.example.ampiv2.presentation.viewmodel.OnboardingViewModel
 import kotlinx.coroutines.launch
@@ -45,7 +46,7 @@ fun OnboardingScreen(
     navController: NavHostController,
     onboardingViewModel: OnboardingViewModel = koinViewModel()
 ) {
-    //membuat list dari onboarding screen page
+    //create list onboarding screen page
     val onboardingPages = listOf(
         OnboardingScreenPage.First,
         OnboardingScreenPage.Second,
@@ -55,48 +56,82 @@ fun OnboardingScreen(
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(pageCount = { onboardingPages.size })
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        HorizontalPager(
-            state = pagerState,
-            modifier = Modifier.weight(1f),
-            verticalAlignment = Alignment.Top
-        ) {
-            position ->
-            OnboardingScreenPager(onboardingScreenPages = onboardingPages[position])
-        }
-        HorizontalPagerIndicator(
-            pagerState = pagerState,
-            pageCount = onboardingPages.size,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .weight(1f),
-            activeColor = Color.Blue,
-            inactiveColor = Color.LightGray,
-        )
-        FinishButton(
-            modifier = Modifier.weight(1f),
-            pagerState = pagerState
-        ) {
-            coroutineScope.launch {
-                onboardingViewModel.onboardingCompleted(true)
-                navController.popBackStack()
-                navController.navigate(BotNavScreen.Home.route)
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column {
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier.weight(1f),
+            ) { position ->
+                OnboardingScreenPager(
+                    onboardingScreenPages = onboardingPages[position],
+                    pageIndex = position
+                )
             }
+            HorizontalPagerIndicator(
+                pagerState = pagerState,
+                pageCount = onboardingPages.size,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(16.dp),
+                activeColor = Color.Blue,
+                inactiveColor = Color.LightGray,
+            )
+            FinishButton(
+                modifier = Modifier.padding(32.dp),
+                pagerState = pagerState
+            ) {
+                coroutineScope.launch {
+                    onboardingViewModel.onboardingCompleted(true)
+                    navController.popBackStack()
+                    navController.navigate(BotNavScreen.Home.route)
+                }
+            }
+        }
+        if (pagerState.currentPage != 2) {
+            Text(
+                text = "Lewati",
+                modifier = Modifier
+                    .padding(top = 16.dp, end = 16.dp)
+                    .align(Alignment.TopEnd)
+                    .clickable {
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(2)
+                            onboardingViewModel.onboardingCompleted(true)
+                            navController.navigate(BotNavScreen.Home.route)
+                        }
+                    },
+                color = Color.Blue,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Medium
+
+            )
         }
     }
 }
 
 @Composable
-fun OnboardingScreenPager(onboardingScreenPages: OnboardingScreenPage) {
+fun OnboardingScreenPager(
+    onboardingScreenPages: OnboardingScreenPage,
+    pageIndex: Int,
+) {
+    val isThirdPage = pageIndex == 2
+
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
+        verticalArrangement = if (isThirdPage) Arrangement.Top else Arrangement.Center
     ) {
         Image(
-            modifier = Modifier
-                .fillMaxWidth(0.7f)
-                .size(300.dp),
+            modifier = if (isThirdPage) {
+                Modifier
+                    .fillMaxWidth()
+                    .height(300.dp)
+            } else {
+                Modifier
+                    .fillMaxWidth(0.7f)
+                    .height(300.dp)
+            },
             painter = painterResource(id = onboardingScreenPages.image),
             contentDescription = "Onboarding Image"
         )
@@ -111,7 +146,7 @@ fun OnboardingScreenPager(onboardingScreenPages: OnboardingScreenPage) {
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = onboardingScreenPages.description,
-            fontSize = 20.sp,
+            fontSize = 15.sp,
             fontWeight = FontWeight.Medium,
             textAlign = TextAlign.Center,
             color = Color.LightGray
@@ -181,5 +216,5 @@ fun FinishButton(
 @Preview(showBackground = true)
 @Composable
 fun OnboardingScreenPreview() {
-    OnboardingScreenPager(onboardingScreenPages = OnboardingScreenPage.First)
+
 }

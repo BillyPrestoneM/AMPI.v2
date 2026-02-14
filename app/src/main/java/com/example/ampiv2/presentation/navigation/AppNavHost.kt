@@ -11,6 +11,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.ampiv2.di.utils.BotNavScreen
+import com.example.ampiv2.presentation.ui.screen.AddScreen
+import com.example.ampiv2.presentation.ui.screen.HomeScreen
+import com.example.ampiv2.presentation.ui.screen.ProfileScreen
+import com.example.ampiv2.presentation.ui.screen.TimeManagementScreen
+import com.example.ampiv2.presentation.ui.screen.onboarding.MoneyManagementScreen
 import com.example.ampiv2.presentation.ui.screen.onboarding.OnboardingScreen
 import com.example.ampiv2.presentation.viewmodel.SplashViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -49,6 +54,21 @@ fun AppNavHost(navController: NavHostController) {
         ) {
             composable(BotNavScreen.Onboarding.route) {
                 OnboardingScreen(navController = navController)
+            }
+            composable(BotNavScreen.Home.route) {
+                HomeScreen(navController = navController)
+            }
+            composable(BotNavScreen.MoneyManagement.route) {
+                MoneyManagementScreen(navController = navController)
+            }
+            composable(BotNavScreen.Add.route) {
+                AddScreen(navController = navController)
+            }
+            composable(BotNavScreen.TimeManagement.route) {
+                TimeManagementScreen(navController = navController)
+            }
+            composable(BotNavScreen.Profile.route) {
+                ProfileScreen(navController = navController)
             }
 
         }

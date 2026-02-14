@@ -12,6 +12,6 @@ sealed class BotNavScreen (
     data object Home : BotNavScreen("home_screen", "Home", R.drawable.home)
     data object Profile : BotNavScreen("profile_screen", "Profile", R.drawable.person)
     data object Add : BotNavScreen("add_screen", "Add", R.drawable.tambah)
-    data object MoneyManagement : BotNavScreen("money_management_screen", "Money Management", R.drawable.payments)
-    data object TimeManagement : BotNavScreen("time_management_screen", "Time Management", R.drawable.event)
+    data object MoneyManagement : BotNavScreen("money_management_screen", "Money", R.drawable.payments)
+    data object TimeManagement : BotNavScreen("time_management_screen", "Time", R.drawable.event)
 }

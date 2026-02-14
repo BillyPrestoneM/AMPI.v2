@@ -12,17 +12,17 @@ sealed class OnboardingScreenPage (
     data object First : OnboardingScreenPage(
         image = R.drawable.dompet,
         title = "Kelola Keuangan Lebih Terkontrol",
-        description = "Catat pemasukan dan pengeluaranmu dengan mudah.\u2028 Pahami ke mana uangmu pergi setiap hari."
+        description = "Catat pemasukan dan pengeluaranmu dengan mudah.\n Pahami ke mana uangmu pergi setiap hari."
 
     )
     data object Second : OnboardingScreenPage(
         image = R.drawable.kalender,
         title = "Waktu Lebih Teratur, Hidup Lebih Tenang",
-        description = "Atur jadwal, tugas, dan prioritasmu.\u2028 Fokus pada hal yang benar-benar penting."
+        description = "Atur jadwal, tugas, dan prioritasmu.\n Fokus pada hal yang benar-benar penting."
     )
     data object Third : OnboardingScreenPage(
         image = R.drawable.riwayat,
         title = "Seimbang antara Finansial & Produktivitas",
-        description = "Kelola keuangan dan waktumu dalam satu aplikasi.\u2028 Bangun kebiasaan baik untuk masa depanmu."
+        description = "Kelola keuangan dan waktumu dalam satu aplikasi.\n Bangun kebiasaan baik untuk masa depanmu."
     )
 }
