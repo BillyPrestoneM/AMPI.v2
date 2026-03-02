@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -35,6 +36,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.ampiv2.di.utils.BotNavScreen
+import com.example.ampiv2.presentation.ui.theme.blue
+import com.example.ampiv2.presentation.ui.theme.gray
 import com.example.ampiv2.presentation.viewmodel.OnboardingViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
@@ -73,7 +76,7 @@ fun OnboardingScreen(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(16.dp),
-                activeColor = Color.Blue,
+                activeColor = blue,
                 inactiveColor = Color.LightGray,
             )
             FinishButton(
@@ -100,7 +103,7 @@ fun OnboardingScreen(
                             navController.navigate(BotNavScreen.Home.route)
                         }
                     },
-                color = Color.Blue,
+                color = blue,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium
 
@@ -114,14 +117,22 @@ fun OnboardingScreenPager(
     onboardingScreenPages: OnboardingScreenPage,
     pageIndex: Int,
 ) {
-    val isThirdPage = pageIndex == 2
 
+    val isThirdPage = pageIndex == 2
 
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = if (isThirdPage) Arrangement.Top else Arrangement.Center
+
+        // ini kuncinya
+        verticalArrangement =
+            if (isThirdPage)
+                Arrangement.Top
+            else
+                Arrangement.Center
+
     ) {
+
         Image(
             modifier = if (isThirdPage) {
                 Modifier
@@ -133,24 +144,48 @@ fun OnboardingScreenPager(
                     .height(300.dp)
             },
             painter = painterResource(id = onboardingScreenPages.image),
-            contentDescription = "Onboarding Image"
+            contentDescription = null
         )
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = onboardingScreenPages.title,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-            color = Color.Black
-        )
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = onboardingScreenPages.description,
-            fontSize = 15.sp,
-            fontWeight = FontWeight.Medium,
-            textAlign = TextAlign.Center,
-            color = Color.LightGray
-        )
+
+
+        if (isThirdPage) {
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = onboardingScreenPages.title,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
+            )
+
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = onboardingScreenPages.description,
+                fontSize = 13.sp,
+                textAlign = TextAlign.Center
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
+
+        } else {
+
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = onboardingScreenPages.title,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
+            )
+
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = onboardingScreenPages.description,
+                fontSize = 13.sp,
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }
 
@@ -160,7 +195,7 @@ fun HorizontalPagerIndicator(
     pagerState: PagerState,
     pageCount: Int,
     modifier: Modifier = Modifier,
-    activeColor: Color = Color.Blue,
+    activeColor: Color = blue,
     inactiveColor: Color = Color.LightGray
 ) {
     Row(
@@ -200,7 +235,7 @@ fun FinishButton(
             Button(
                 onClick = onClick,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Blue,
+                    containerColor = blue,
                     contentColor = Color.White
                 )
             ) {

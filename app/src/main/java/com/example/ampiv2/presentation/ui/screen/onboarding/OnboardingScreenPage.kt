@@ -17,7 +17,7 @@ sealed class OnboardingScreenPage (
     )
     data object Second : OnboardingScreenPage(
         image = R.drawable.kalender,
-        title = "Waktu Lebih Teratur, Hidup Lebih Tenang",
+        title = "Waktu Lebih Teratur Hidup Lebih Tenang",
         description = "Atur jadwal, tugas, dan prioritasmu.\n Fokus pada hal yang benar-benar penting."
     )
     data object Third : OnboardingScreenPage(
