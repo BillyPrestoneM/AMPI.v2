@@ -37,7 +37,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.ampiv2.di.utils.BotNavScreen
 import com.example.ampiv2.presentation.ui.theme.blue
-import com.example.ampiv2.presentation.ui.theme.gray
 import com.example.ampiv2.presentation.viewmodel.OnboardingViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
